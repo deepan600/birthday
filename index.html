@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Birthday Page</title>
+  <style>
+    body {
+      background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1, .watermark {
+      text-align: center;
+      color: #ffcc00;
+    }
+    .watermark a {
+      color: #00eaff;
+      text-decoration: none;
+    }
+    .input-group {
+      margin: 15px 0;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: none;
+      box-shadow: 0 0 10px rgba(255,255,255,0.2);
+    }
+    button {
+      padding: 12px 20px;
+      background-color: #00eaff;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="watermark">Created by Deepan - <a href="https://www.instagram.com/crazy_boy_deepan_6/" target="_blank">@crazy_boy_deepan_6</a></div>
+  <h1>Create Birthday Surprise Page</h1>
+
+  <div class="input-group"><label>Name of Birthday Person: <input type="text" id="nameofbirth" required></label></div>
+  <div class="input-group"><label>Your Insta URL: <input type="url" id="yourinstaurl"></label></div>
+  <div class="input-group"><label>Your Insta ID: <input type="text" id="yourinstaid"></label></div>
+  <div class="input-group"><label>Birthday Person Insta URL: <input type="url" id="urlofbirth"></label></div>
+  <div class="input-group"><label>Birthday Person Insta ID: <input type="text" id="idofbirth"></label></div>
+  <div class="input-group"><label>Letter Message (max 500 characters): <textarea maxlength="500" id="letter"></textarea></label></div>
+
+  <!-- Upload images -->
+  <div class="input-group"><label>Upload 5 Images:<br>
+    <input type="file" accept="image/*" id="img1">
+    <input type="file" accept="image/*" id="img2">
+    <input type="file" accept="image/*" id="img3">
+    <input type="file" accept="image/*" id="img4">
+    <input type="file" accept="image/*" id="img5">
+  </label></div>
+
+  <button onclick="submitForm()">Generate Page</button>
+
+  <script>
+    function readImage(input, callback) {
+      const file = input.files[0];
+      if (!file) return callback('');
+      const reader = new FileReader();
+      reader.onload = () => callback(reader.result);
+      reader.readAsDataURL(file);
+    }
+
+    function submitForm() {
+      const data = {
+        nameofbirth: document.getElementById('nameofbirth').value,
+        yourinstaurl: document.getElementById('yourinstaurl').value,
+        yourinstaid: document.getElementById('yourinstaid').value,
+        urlofbirth: document.getElementById('urlofbirth').value,
+        idofbirth: document.getElementById('idofbirth').value,
+        letter: document.getElementById('letter').value
+      };
+
+      const images = ['img1', 'img2', 'img3', 'img4', 'img5'];
+      let loaded = 0;
+
+      images.forEach((id, index) => {
+        readImage(document.getElementById(id), (result) => {
+          data[id] = result;
+          loaded++;
+          if (loaded === 5) {
+            localStorage.setItem('bdayData', JSON.stringify(data));
+            window.location.href = 'birthday.html';
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>

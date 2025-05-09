@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday</title>
+  <style>
+    body {
+     background: linear-gradient(135deg, #ffccff, #ccffff);
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    .watermark {
+      font-size: 12px;
+      color: #bbb;
+      margin-bottom: 10px;
+    }
+    .watermark a {
+      color: #00eaff;
+      text-decoration: none;
+    }
+    .gallery img {
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 10px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.4);
+    }
+    .big { width: 150px; height: 150px; }
+    .medium { width: 120px; height: 120px; }
+    .small { width: 90px; height: 90px; }
+
+    .message {
+      background: rgba(0,0,0,0.3);
+      padding: 15px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 10px;
+    }
+    .insta-links a {
+      color: #ffcc00;
+      text-decoration: none;
+      display: block;
+    }
+    #capture {
+      margin-top: 30px;
+      padding: 12px 20px;
+      background: #00eaff;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="watermark">Created by Deepan - <a href="https://www.instagram.com/crazy_boy_deepan_6/" target="_blank">@crazy_boy_deepan_6</a></div>
+
+  <h1 id="title">Happy Birthday 🎉</h1>
+
+  <div class="gallery" id="images"></div>
+
+  <div class="message" id="letterBox"></div>
+
+  <div class="insta-links">
+    <p>From: <a id="fromLink" href="#" target="_blank"></a></p>
+    <p>To: <a id="toLink" href="#" target="_blank"></a></p>
+  </div>
+
+  <audio id="bgMusic" loop autoplay>
+    <source src="123.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <button id="capture">📸 Capture and Share on Instagram</button>
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script>
+    const data = JSON.parse(localStorage.getItem('bdayData'));
+    if (data) {
+      // Set background gradient
+      document.body.style.background = `linear-gradient(to right, ${data.bgColor1}, ${data.bgColor2})`;
+
+      // Set name and letter
+      document.getElementById("title").textContent = `Happy Birthday 🎉 ${data.nameofbirth}!`;
+      document.getElementById("letterBox").textContent = data.letter;
+
+      // Add 3 different sized images
+      const imgDiv = document.getElementById("images");
+      const imgSizes = ["big", "medium", "small"];
+      imgSizes.forEach((size, i) => {
+        const img = document.createElement("img");
+        img.src = data[`img${i + 1}`];
+        img.className = size;
+        imgDiv.appendChild(img);
+      });
+
+      // Insta links
+      document.getElementById("fromLink").textContent = data.yourinstaid;
+      document.getElementById("fromLink").href = data.yourinstaurl;
+
+      document.getElementById("toLink").textContent = data.idofbirth;
+      document.getElementById("toLink").href = data.urlofbirth;
+    }
+
+    // Screenshot capture
+    document.getElementById("capture").onclick = function () {
+      html2canvas(document.body).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "birthday_wish.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        alert("Screenshot saved. Open Instagram → add to your Story 📲");
+      });
+    };
+  </script>
+</body>
+</html>
