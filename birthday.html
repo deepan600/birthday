@@ -37,57 +37,57 @@
       border-radius: 50%;
       margin: 10px;
       border: 4px solid white;
-      transition: all 0.5s ease-in-out;
+      animation: glow 5s infinite alternate;
     }
 
     .big { width: 150px; height: 150px; }
     .medium { width: 120px; height: 120px; }
     .small { width: 90px; height: 90px; }
 
-    /* Glow color animations for individual images */
+    /* Glow color transition for each circle starting with a specific color */
     .glow1 {
       animation: glowRed 5s infinite alternate;
     }
 
     .glow2 {
-      animation: glowBlue 5s infinite alternate;
+      animation: glowGreen 5s infinite alternate;
     }
 
     .glow3 {
-      animation: glowLime 5s infinite alternate;
+      animation: glowYellow 5s infinite alternate;
     }
 
     .glow4 {
-      animation: glowOrange 5s infinite alternate;
+      animation: glowBlue 5s infinite alternate;
     }
 
     .glow5 {
-      animation: glowViolet 5s infinite alternate;
+      animation: glowBrown 5s infinite alternate;
     }
 
     @keyframes glowRed {
       0% { box-shadow: 0 0 20px 5px red; }
-      100% { box-shadow: 0 0 20px 5px pink; }
+      100% { box-shadow: 0 0 20px 5px orange; }
+    }
+
+    @keyframes glowGreen {
+      0% { box-shadow: 0 0 20px 5px green; }
+      100% { box-shadow: 0 0 20px 5px yellow; }
+    }
+
+    @keyframes glowYellow {
+      0% { box-shadow: 0 0 20px 5px yellow; }
+      100% { box-shadow: 0 0 20px 5px red; }
     }
 
     @keyframes glowBlue {
       0% { box-shadow: 0 0 20px 5px blue; }
-      100% { box-shadow: 0 0 20px 5px cyan; }
+      100% { box-shadow: 0 0 20px 5px purple; }
     }
 
-    @keyframes glowLime {
-      0% { box-shadow: 0 0 20px 5px lime; }
-      100% { box-shadow: 0 0 20px 5px yellow; }
-    }
-
-    @keyframes glowOrange {
-      0% { box-shadow: 0 0 20px 5px orange; }
+    @keyframes glowBrown {
+      0% { box-shadow: 0 0 20px 5px brown; }
       100% { box-shadow: 0 0 20px 5px gold; }
-    }
-
-    @keyframes glowViolet {
-      0% { box-shadow: 0 0 20px 5px violet; }
-      100% { box-shadow: 0 0 20px 5px indigo; }
     }
 
     .message {
@@ -165,7 +165,8 @@
 
       imgSizes.forEach((size, i) => {
         const img = document.createElement("img");
-        img.src = data[`img${i + 1}`];
+        // Use a fallback image if the image data is missing
+        img.src = data[`img${i + 1}`] || 'https://via.placeholder.com/150';  // Fallback placeholder image
         img.className = `${size} ${glowClasses[i]}`;
         imgDiv.appendChild(img);
       });
